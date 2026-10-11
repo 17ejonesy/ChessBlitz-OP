@@ -7,7 +7,13 @@
       "move_index": 1,
       "fen": "5r1k/4n2p/1p4p1/pP5Q/P2pB2K/6P1/2P4P/4q3 w - - 0 38",
       "player_color": "white",
-      "themes": [],
+      "themes": [
+        "advantage",
+        "discoveredAttack",
+        "endgame",
+        "fork",
+        "long"
+      ],
       "teaching_themes": [
         "fork"
       ],
@@ -34,7 +40,13 @@
       "move_index": 2,
       "fen": "5rk1/4n2p/1p4p1/pP2Q3/P2pB2K/6P1/2P4P/4q3 w - - 2 39",
       "player_color": "white",
-      "themes": [],
+      "themes": [
+        "advantage",
+        "discoveredAttack",
+        "endgame",
+        "fork",
+        "long"
+      ],
       "teaching_themes": [
         "fork"
       ],
@@ -59,7 +71,13 @@
       "move_index": 3,
       "fen": "5rk1/7p/1p4p1/pP1nQ3/P2p3K/6P1/2P4P/4q3 w - - 0 40",
       "player_color": "white",
-      "themes": [],
+      "themes": [
+        "advantage",
+        "discoveredAttack",
+        "endgame",
+        "fork",
+        "long"
+      ],
       "teaching_themes": [
         "fork"
       ],

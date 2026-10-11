@@ -7,7 +7,12 @@
       "move_index": 1,
       "fen": "r4rk1/pp1q2pp/3p1p2/2p2P2/5Q2/2Pn3P/PP1N1PP1/4RRK1 w - - 4 18",
       "player_color": "white",
-      "themes": [],
+      "themes": [
+        "crushing",
+        "fork",
+        "middlegame",
+        "short"
+      ],
       "teaching_themes": [
         "fork"
       ],
@@ -32,7 +37,12 @@
       "move_index": 2,
       "fen": "r4rk1/pp1q2pp/5p2/2pp1P2/2Q5/2Pn3P/PP1N1PP1/4RRK1 w - - 0 19",
       "player_color": "white",
-      "themes": [],
+      "themes": [
+        "crushing",
+        "fork",
+        "middlegame",
+        "short"
+      ],
       "teaching_themes": [
         "fork"
       ],

@@ -7,7 +7,14 @@
       "move_index": 1,
       "fen": "5r1k/p3q1pp/1p6/3pB3/3Pb3/2P3Q1/P5PP/5RK1 w - - 0 28",
       "player_color": "white",
-      "themes": [],
+      "themes": [
+        "endgame",
+        "mate",
+        "mateIn2",
+        "pin",
+        "sacrifice",
+        "short"
+      ],
       "teaching_themes": [
         "pin"
       ],
@@ -32,7 +39,14 @@
       "move_index": 2,
       "fen": "5r1k/p5qp/1p6/3pB3/3Pb3/2P5/P5PP/5RK1 w - - 0 29",
       "player_color": "white",
-      "themes": [],
+      "themes": [
+        "endgame",
+        "mate",
+        "mateIn2",
+        "pin",
+        "sacrifice",
+        "short"
+      ],
       "teaching_themes": [
         "pin"
       ],
