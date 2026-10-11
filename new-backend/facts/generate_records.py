@@ -89,6 +89,19 @@ def fetch_from_supabase(puzzle_ids: list[str]) -> dict[str, dict]:
             "teaching_themes": teaching_themes_from_rows(mini_by_id.get(pid, [])),
             "_has_mini_row": pid in mini_by_id,
         }
+    # Some mini puzzles (e.g. 00AhO) aren't in Puzzles. Puzzles_Mini has FEN/Moves too,
+    # so use it; only the full Lichess `themes` list is unavailable for these.
+    for pid, mrows in mini_by_id.items():
+        if pid not in out:
+            print(f"! {pid}: not in {PUZZLES_TABLE}; using {PUZZLES_MINI_TABLE} (themes will be [])",
+                  file=sys.stderr)
+            out[pid] = {
+                "fen": mrows[0][COL_FEN],
+                "moves": mrows[0][COL_MOVES],
+                "themes": None,
+                "teaching_themes": teaching_themes_from_rows(mrows),
+                "_has_mini_row": True,
+            }
     return out
 
 
@@ -148,7 +161,7 @@ def main(argv=None) -> int:
     for pid in args.puzzle_ids:
         p = puzzles.get(pid)
         if p is None:
-            print(f"✗ {pid}: not found in {PUZZLES_TABLE}", file=sys.stderr)
+            print(f"✗ {pid}: not found in {PUZZLES_TABLE} or {PUZZLES_MINI_TABLE}", file=sys.stderr)
             failed.append(pid)
             continue
         if not p["_has_mini_row"]:
