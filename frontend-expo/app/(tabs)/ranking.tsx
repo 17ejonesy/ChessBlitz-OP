@@ -7,7 +7,7 @@ import { useGlobalSearchParams } from 'expo-router';
 import { useTheme } from '@/context/ThemeContext';
 import GlobalStyle from "@/context/GlobalStyle";
 import backgroundImages, { BackgroundContext } from "@/context/Backgrounds";
-import { API_URL } from "@/constants/urls";
+import { getApiUrl } from "@/constants/urls";
 type RankingData = {
   rank: number;
   name: string;
@@ -40,12 +40,11 @@ export default function RankingsScreen() {
   const [boardScope, setBoardScope] = useState("Global"); //"Global"/"Friends" | Determines tbe scope of the people the leaderboard will display
   const [category, setCategory] = useState("Elo"); //"Elo"/"Streak"/"Time" | Determines how the leaderboard is sorted
 
-  const API_URL = "http://127.0.0.1:5000/leaderboards/35/elo";
   useEffect(() => {
     const fetchRankings = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
-        const response = await fetch(API_URL, {
+        const response = await fetch(`${getApiUrl()}/leaderboards/35/elo`, {
           headers: { Authorization: `Bearer ${session?.access_token}` },
         });
         const data = await response.json();
