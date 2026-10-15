@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { GestureHandlerRootView, Pressable, ScrollView } from "react-native-gesture-handler";
-import { ImageBackground, StyleSheet, View, Text, TouchableOpacity, useWindowDimensions } from "react-native";
+import { Alert, ImageBackground, StyleSheet, View, Text, TouchableOpacity, useWindowDimensions } from "react-native";
 import { CheckerPreview } from "@/components/CheckerPreview";
 import { useTheme } from "@/context/ThemeContext";
 import { useShop } from "@/context/ShopContext";
@@ -9,8 +9,11 @@ import backgroundImages, { BackgroundContext } from "@/context/Backgrounds";
 import { BlurView } from "expo-blur";
 import { useFocusEffect, useGlobalSearchParams } from "expo-router";
 import GlobalStyle from "@/context/GlobalStyle";
+import { Ionicons } from "@expo/vector-icons";
 import camelToTitle from "@/utils/CamelToTitle";
 import { buyItem } from "@/api/HandleShop";
+
+
 
 // Main screen component that displays all themes
 export default function ShopScreen() {
@@ -159,17 +162,42 @@ export default function ShopScreen() {
     return { status: "coming_soon" };
   }
 
+  const purchaseTheme = async (name: string) => {
+    const success = await buyItem(themeKey(name));
+    if (!success) {
+      return;
+    }
+    await loadShop();
+
+    setTheme(name);
+    setSelectedThemeName(name as any);
+  }
+
+
+
   const handleSwitchTheme = async (name: string) => {
     const key = themeKey(name);
 
     const item = checkPrice(name)
     if (item.status === "locked") {
       if (currency >= (item.price ?? Infinity)) {
-        const success = await buyItem(key);
-        if (!success) {
-          return;
-        }
-        loadShop();
+        
+        // const success = await buyItem(key);
+        // if (!success) {
+        //   return;
+        // }
+        // loadShop();
+
+        // NEW: ask for confirmation first, purchase happens in purchaseTheme
+        Alert.alert(
+          `Buy ${camelToTitle(name)}?`,
+          `This will cost ${item.price}. You'll have ${currency - (item.price as number)} left.`,
+          [
+            { text: "Cancel", style: "cancel" },
+            { text: "Buy", onPress: () => purchaseTheme(name) },
+          ]
+        );
+        return;
       }
       else {
         alert("This theme is locked");
