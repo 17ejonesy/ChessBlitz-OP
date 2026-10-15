@@ -26,6 +26,13 @@ OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 app = Flask(__name__)
 CORS(app)
+
+# Facts records for hints (Ticket 1): GET /puzzles/<id>/records
+try:
+    from backend.records_api import records_bp
+except ImportError:  # running app.py directly
+    from records_api import records_bp
+app.register_blueprint(records_bp)
 # ======================== AUTHORIZATION ========================
 
 # Extract JWT from header
