@@ -17,6 +17,18 @@ type RankingData = {
   streak: number;
   isYou:boolean;
 };
+type RankingResponse = {
+  name?: string | null;
+  overall?: number | null;
+  rating?: number | null;
+};
+
+const hasCompleteRanking = ({ name, overall, rating }: RankingResponse) => {
+  const normalizedName = name?.trim().toLowerCase();
+  const ranking = overall ?? rating;
+
+  return Boolean(normalizedName && normalizedName !== "unknown student") && Number.isFinite(ranking);
+};
 //Creates a new player profile to display with given/default properties
 const CreateProfile = ({ 
   rank = 1337, 
@@ -50,14 +62,19 @@ export default function RankingsScreen() {
         });
         const data = await response.json();
 
-        setRankings([...data].reverse().map(({name, student_id, overall, rating}:{name:string, student_id:string, overall:number, rating:number}, i:number) => (
-          CreateProfile({
-            rank: i + 1,
-            name: name,
-            rating: overall ?? rating,
-            isYou: false,
-          })
-        )));
+        const rankedStudents = (data as RankingResponse[])
+          .filter(hasCompleteRanking)
+          .reverse()
+          .map(({ name, overall, rating }, i) => (
+            CreateProfile({
+              rank: i + 1,
+              name: name!.trim(),
+              rating: (overall ?? rating)!,
+              isYou: false,
+            })
+          ));
+
+        setRankings(rankedStudents);
 
       } catch (error) {
         setError(true);
